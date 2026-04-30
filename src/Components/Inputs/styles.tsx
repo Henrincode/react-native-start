@@ -2,14 +2,12 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'tomato',
+        flex: 1,
         padding: 20,
         borderRadius: 20,
-        flex: 1,
         fontSize: 30,
-        textAlign: 'center'
-    },
-    text: {
+        textAlign: 'center',
+        backgroundColor: 'tomato',
     }
 })
 
