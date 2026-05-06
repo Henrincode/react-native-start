@@ -9,7 +9,7 @@ export default function ButtonCalc({ tittle, ...rest }: Props) {
     return (
         <TouchableOpacity
             {...rest}
-            style={styles.container}
+            style={[styles.container, rest.disabled && { opacity: 0.3 }]}
         >
             <Text
                 style={styles.text}

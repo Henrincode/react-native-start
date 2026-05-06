@@ -7,7 +7,7 @@ interface Props extends TouchableOpacityProps {
 
 export default function TextoButton({texto, ...rest}: Props) {
     return (
-        <TouchableOpacity {...rest} style={styles.container}>
+        <TouchableOpacity {...rest} style={[styles.container, rest.disabled && {opacity: 0.3}]}>
             <Text style={[styles.texto]}>{texto}</Text>
         </TouchableOpacity>
     )
