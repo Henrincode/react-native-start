@@ -20,3 +20,12 @@ Abra o terminal CMD na pasta que deseja criar o projeto:
 Caso já esteja dentro da pasta do projeto use ponto `.` para informar ao sistema que não quer criar uma pasta com o nome do projeto:
 
  - `npx create-expo-app . --template`
+ - `npm start`
+
+ Caso esteja em uma rede que não permita rodar online use:
+
+ - `npx expo start --offline`
+
+ Corrigir versões de bibliotecas:
+
+ - `npx expo install --check`
