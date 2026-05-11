@@ -1,27 +1,28 @@
+import EscapeButton from '@/Components/Buttons/EscapeButton';
+import PointButton from '@/Components/Buttons/PointButton';
+import ResetButton from '@/Components/Buttons/ResetButton';
+import TrucoButton from '@/Components/Buttons/TrucoButton';
+import Score from '@/Components/Score';
+import ScrollContainer from '@/Components/ScrollContainer';
+import Team from '@/Components/Team';
+import { useAudioPlayer } from 'expo-audio';
+import { useState } from 'react';
 import { Alert, Text, View } from 'react-native';
 import styles from './styles';
-import PointButton from '@/Components/Buttons/PointButton';
-import { useState } from 'react';
-import Score from '@/Components/Score';
-import Team from '@/Components/Team';
-import TrucoButton from '@/Components/Buttons/TrucoButton';
-import ResetButton from '@/Components/Buttons/ResetButton';
-import EscapeButton from '@/Components/Buttons/EscapeButton';
-import { useAudioPlayer } from 'expo-audio';
 
 export default function App() {
 
   // hooks
 
-  const [teamA, setTeamA] = useState('Time A'.toUpperCase());
-  const [scoreA, setScoreA] = useState(0);
-  const [victoriesA, setVictoriesA] = useState(0);
+  const [teamA, setTeamA] = useState('Time A'.toUpperCase())
+  const [scoreA, setScoreA] = useState(0)
+  const [victoriesA, setVictoriesA] = useState(0)
 
-  const [teamB, setTeamB] = useState('Time B'.toUpperCase());
-  const [scoreB, setScoreB] = useState(0);
-  const [victoriesB, setVictoriesB] = useState(0);
+  const [teamB, setTeamB] = useState('Time B'.toUpperCase())
+  const [scoreB, setScoreB] = useState(0)
+  const [victoriesB, setVictoriesB] = useState(0)
 
-  const [point, setPoint] = useState(1);
+  const [point, setPoint] = useState(1)
 
   // load sounds
 
@@ -36,14 +37,14 @@ export default function App() {
   // functions
 
   function playSound(soundName: keyof typeof sounds) {
-    const player = sounds[soundName];
-    player.seekTo(0); // reset audio
-    player.play();
-  };
+    const player = sounds[soundName]
+    player.seekTo(0) // reset audio
+    player.play()
+  }
 
   function pointAdd(team: string) {
-    playSound('pointAdd');
-    const total = team === 'a' ? point + scoreA : point + scoreB;
+    playSound('pointAdd')
+    const total = team === 'a' ? point + scoreA : point + scoreB
 
     if (total >= 12) {
 
@@ -57,61 +58,61 @@ export default function App() {
           {
             text: "OK",
             onPress: () => {
-              playSound('victorie');
-              team === 'a' ? setVictoriesA(victoriesA + 1) : setVictoriesB(victoriesB + 1);
-              setPoint(1);
-              setScoreA(0);
-              setScoreB(0);
+              playSound('victorie')
+              team === 'a' ? setVictoriesA(victoriesA + 1) : setVictoriesB(victoriesB + 1)
+              setPoint(1)
+              setScoreA(0)
+              setScoreB(0)
             }
           }
         ]
       )
 
     } else {
-      team === 'a' ? setScoreA(scoreA + point) : setScoreB(scoreB + point);
-      setPoint(1);
+      team === 'a' ? setScoreA(scoreA + point) : setScoreB(scoreB + point)
+      setPoint(1)
     }
   }
 
   function pointRemove(team: string) {
-    playSound('pointRemove');
-    const total = team === 'a' ? scoreA - point : scoreB - point;
+    playSound('pointRemove')
+    const total = team === 'a' ? scoreA - point : scoreB - point
     if (total <= 0) {
-      team === 'a' ? setScoreA(0) : setScoreB(0);
+      team === 'a' ? setScoreA(0) : setScoreB(0)
     } else {
-      team === 'a' ? setScoreA(total) : setScoreB(total);
+      team === 'a' ? setScoreA(total) : setScoreB(total)
     }
-    setPoint(1);
+    setPoint(1)
   }
 
   function truco() {
-    playSound('truco');
+    playSound('truco')
     if (point === 1) {
-      setPoint(3);
+      setPoint(3)
     } else if (point < 12) {
-      setPoint(point + 3);
+      setPoint(point + 3)
     }
   }
 
   function escape() {
-    playSound('duck');
+    playSound('duck')
     if (point > 3) {
-      setPoint(point - 3);
+      setPoint(point - 3)
     } else if (point === 3) {
-      setPoint(1);
+      setPoint(1)
     }
   }
 
   function reset() {
-    setPoint(1);
-    setScoreA(0);
-    setScoreB(0);
-    setVictoriesA(0);
-    setVictoriesB(0);
+    setPoint(1)
+    setScoreA(0)
+    setScoreB(0)
+    setVictoriesA(0)
+    setVictoriesB(0)
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollContainer style={styles.container}>
 
       {/* logo */}
       <Text style={styles.h1}>♦️ TRUCO ♦️</Text>
@@ -149,13 +150,14 @@ export default function App() {
 
       {/* escape button */}
       <View style={styles.row}>
-        <EscapeButton disabled={point <= 1} onPress={escape} />
+        <EscapeButton disabled={point <= 1} onPress={escape} point={point} />
       </View>
 
       {/* reset buttons */}
       <View style={styles.row}>
         <ResetButton onPress={reset} />
       </View>
-    </View>
-  );
+
+    </ScrollContainer>
+  )
 }

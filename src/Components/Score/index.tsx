@@ -1,5 +1,5 @@
-import styles from "./styles"
-import { Text, View } from "react-native"
+import styles from "./styles";
+import { Text, View } from "react-native";
 
 export default function Score({ score }: { score: number }) {
     return (
